@@ -1,5 +1,5 @@
 import React from "react";
-import AvatarLogo from "../../img/addAvatar.png";
+import AvatarLogo from "../img/addAvatar.png";
 
 const Register = () => {
   return (
