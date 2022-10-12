@@ -55,8 +55,10 @@ body {
       }
 
       input:focus {
-        background-color: rgba(231, 137, 255, 0.708);
+        background-color: rgba(196, 118, 216, 0.622);
         box-shadow: 0rem 0.5rem 1rem rgba(81, 50, 60, 0.654);
+        padding: 20px;
+        font-size: large;
       }
 
       button {
