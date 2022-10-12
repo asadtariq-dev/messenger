@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+  background: linear-gradient(to right, #fc00ff, #00dbde);
+}
+
+.formContainer {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .formWrapper {
+    background-color: #ffffff0f;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 20px 60px;
+    box-shadow: 0rem 0.5rem 1rem rgba(81, 50, 60, 0.654);
+
+    .logo {
+      color: rgb(253, 253, 253);
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      input {
+        padding: 15px;
+        border: none;
+        width: 250px;
+        border-bottom: 1px solid #000;
+        border-radius: 10px;
+
+        &::placeholder {
+          color: rgb(186, 181, 181);
+        }
+
+      }
+
+      button {
+        background-color: rgb(235, 117, 237);
+        border: none;
+        color: rgb(255, 255, 255);
+        padding: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.566);
+        cursor: pointer;
+      }
+
+
+    }
+
+    p {
+      color: #ffffff81;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+}
