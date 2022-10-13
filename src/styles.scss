@@ -78,7 +78,6 @@ body {
         box-shadow: 0rem 0.3rem 0rem rgba(81, 50, 60, 0.654);
       }
 
-
       label {
         display: flex;
         align-items: center;
@@ -86,6 +85,15 @@ body {
         cursor: pointer;
         font-weight: bold;
       }
+
+    }
+
+    .link {
+      background-color: #781f9b32;
+      border-radius: 10px;
+      color: rgba(255, 255, 255, 0.781);
+      text-decoration: none;
+      padding: 5px 8px;
     }
 
     p {
