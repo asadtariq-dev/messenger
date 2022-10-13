@@ -1,6 +1,7 @@
 import React from "react";
 import attachmentIcon from "../../img/attachment.png";
 import imgIcon from "../../img/img.png";
+import sendIcon from "../../img/send.png";
 
 const Input = () => {
   return (
@@ -12,7 +13,8 @@ const Input = () => {
         <label htmlFor="file">
           <img src={attachmentIcon} alt="" />
         </label>
-        <button>Send</button>
+        <button className="text">Send</button>
+        <img className="icon" src={sendIcon} alt="" />
       </div>
     </div>
   );
