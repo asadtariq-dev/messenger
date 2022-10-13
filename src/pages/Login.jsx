@@ -4,7 +4,7 @@ const Login = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <p className="logo">Infinity Chat</p>
+        <p className="logo">Purple</p>
         <form>
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
