@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Qwigley&display=swap');
 
+@mixin mobile {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin tab {
+  @media screen and (max-width: 950px) {
+    @content;
+  }
+}
+
 body {
   padding: 0px;
   margin: 0px;
@@ -120,6 +132,52 @@ p {
     box-shadow: 0rem 0rem 0.2rem rgba(232, 201, 255, 0.65);
     overflow: hidden;
     display: flex;
+
+    @include tab() {
+      width: 95%;
+      height: 98vh;
+
+      .sideBar {
+        flex: 0.1;
+
+        .users {
+          justify-content: center;
+          gap: 0px
+        }
+
+        p {
+          display: none;
+        }
+
+        input {
+          display: none;
+        }
+
+        .name {
+          display: none;
+        }
+
+        .navBar {
+          justify-content: center;
+
+          .name {
+            display: none;
+          }
+
+          .moreIcon {
+            display: none;
+          }
+        }
+
+        .searchBar {
+          border: none;
+
+          .users {
+            display: none;
+          }
+        }
+      }
+    }
   }
 
   .sideBar {
@@ -129,7 +187,6 @@ p {
     .navBar {
       display: flex;
       align-items: center;
-      // background-color: rgba(62, 4, 112, 0.196);
       height: 50px;
       padding: 10px;
       justify-content: space-between;
@@ -149,6 +206,11 @@ p {
         border-radius: 50%;
         border: none;
         object-fit: cover;
+
+        @include mobile() {
+          width: 25px;
+          height: 25px;
+        }
       }
 
       .logo {
@@ -195,6 +257,7 @@ p {
       color: white;
       font-weight: bold;
 
+
       &:hover {
         background-color: #5d33a2;
         font-size: large;
@@ -205,6 +268,11 @@ p {
         height: 50px;
         border-radius: 50%;
         object-fit: cover;
+
+        @include mobile() {
+          width: 30px;
+          height: 30px;
+        }
       }
     }
 
@@ -215,30 +283,6 @@ p {
           margin-top: 2px;
         }
       }
-    }
-  }
-
-  @media only screen and (max-width: 1000px) {
-    .formWrapper {
-      padding: 20px 50px;
-    }
-
-    .homeWrapper {
-      padding: 20px 50px;
-
-      width: 100%;
-
-      .chat {
-        flex: 1;
-
-        .messages {
-          padding: 8px;
-        }
-      }
-    }
-
-    .sideBar {
-      display: none;
     }
   }
 
@@ -356,6 +400,27 @@ p {
         display: flex;
         align-items: center;
         gap: 10px;
+
+        .icon {
+          display: none;
+        }
+
+        @include tab() {
+          gap: 8px;
+
+          img {
+            width: 20px;
+            height: 20px;
+          }
+
+          .text {
+            display: none;
+          }
+
+          .icon {
+            display: inline;
+          }
+        }
       }
 
       img {
