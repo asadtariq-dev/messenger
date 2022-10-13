@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AvatarLogo from "../img/addAvatar.png";
 
 const Register = () => {
@@ -11,7 +12,14 @@ const Register = () => {
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
           <input style={{ display: "none" }} type="file" id="file" />
-          <div style={{ border: '1px solid whitesmoke', padding: '5px', borderRadius: '10px', color: 'purple'}}>
+          <div
+            style={{
+              border: "1px solid whitesmoke",
+              padding: "5px",
+              borderRadius: "10px",
+              color: "purple",
+            }}
+          >
             <label htmlFor="file">
               <img src={AvatarLogo} width="40" alt="avatar" />
               <span>Add an avatar</span>
@@ -19,7 +27,12 @@ const Register = () => {
           </div>
           <button>Sign up</button>
         </form>
-        <p>Already have an account? Login</p>
+        <p>
+          Already have an account?{" "}
+          <Link className="link" to={"/login"}>
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
