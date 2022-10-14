@@ -17,7 +17,6 @@ const Register = () => {
               border: "1px solid whitesmoke",
               padding: "5px",
               borderRadius: "10px",
-              color: "purple",
             }}
           >
             <label htmlFor="file">
@@ -27,12 +26,10 @@ const Register = () => {
           </div>
           <button>Sign up</button>
         </form>
-        <p>
-          Already have an account?{" "}
-          <Link className="link" to={"/login"}>
-            Login
-          </Link>
-        </p>
+        <p>Already have an account? </p>
+        <Link className="link" to={"/login"}>
+          Login
+        </Link>
       </div>
     </div>
   );

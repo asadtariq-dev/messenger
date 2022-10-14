@@ -12,12 +12,10 @@ const Login = () => {
 
           <button>Login</button>
         </form>
-        <p>
-          Don't have an account?{" "}
-          <Link className="link" to={"/register"}>
-            Register
-          </Link>
-        </p>
+        <p>Don't have an account? </p>
+        <Link className="link" to={"/register"}>
+          Register
+        </Link>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const Chats = () => {
           alt=""
         />
         <div className="userInfo">
-          <span>James</span>
+          <span className="name">James</span>
           <p>Hello there</p>
         </div>
       </div>
