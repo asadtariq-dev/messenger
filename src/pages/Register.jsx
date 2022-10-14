@@ -17,7 +17,6 @@ const Register = () => {
               border: "1px solid whitesmoke",
               padding: "5px",
               borderRadius: "10px",
-              color: "purple",
             }}
           >
             <label htmlFor="file">
