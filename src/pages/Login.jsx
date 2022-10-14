@@ -23,6 +23,7 @@ const Login = () => {
     <div className="formContainer">
       <div className="formWrapper">
         <p className="logo">Purple</p>
+        {error && <p>{error}</p>}
         <div>
           <input
             type="email"
@@ -41,7 +42,6 @@ const Login = () => {
 
           <button onClick={onSubmit}>Login</button>
         </div>
-        <p>{error}</p>
         <p>Don't have an account? </p>
         <Link className="link" to={"/register"}>
           Register
