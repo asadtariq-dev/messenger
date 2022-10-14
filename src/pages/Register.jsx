@@ -14,6 +14,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
   const [error, setError] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const onSubmit = async () => {
     try {
@@ -23,6 +24,12 @@ const Register = () => {
       const uploadTask = uploadBytesResumable(storageRef, avatar);
 
       uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
         (error) => {
           setError(error);
         },
@@ -32,14 +39,11 @@ const Register = () => {
               name,
               photoURL: downloadURL,
             });
+            navigate("/login");
           });
-          console.log(name);
-          console.log(avatar);
         }
       );
       setError("");
-      navigate("/login");
-      alert("Account Created");
     } catch (error) {
       setError(error.message);
     }
@@ -79,18 +83,41 @@ const Register = () => {
             type="file"
             id="file"
           />
+
           <div
             style={{
               border: "1px solid whitesmoke",
               padding: "5px",
               borderRadius: "10px",
+              textAlign: "center",
+              display: "flex",
             }}
           >
-            <label htmlFor="file">
-              <img src={AvatarLogo} width="40" alt="avatar" />
-              <span>Add an avatar</span>
-            </label>
+            {progress ? (
+              <>
+                {progress > 50 ? (
+                  <>
+                    {progress === 100 ? (
+                      <p style={{ color: "white" }}>Account created</p>
+                    ) : (
+                      <p>Creating your account...</p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <p>Uploading your avatar...</p>
+                    <p>{Math.round(progress)}%</p>
+                  </>
+                )}
+              </>
+            ) : (
+              <label htmlFor="file">
+                <img src={AvatarLogo} width="40" alt="avatar" />
+                <span>Add an avatar</span>
+              </label>
+            )}
           </div>
+
           <button onClick={onSubmit}>Sign up</button>
         </div>
         <p>{error}</p>
