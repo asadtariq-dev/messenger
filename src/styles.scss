@@ -63,6 +63,8 @@ button {
   color: rgba(255, 255, 255, 0.781);
   text-decoration: none;
   padding: 5px 8px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .formContainer {
@@ -75,11 +77,23 @@ button {
     background-color: #ffffff0f;
     border-radius: 10px;
     display: flex;
+    width: 65%;
+    height: 80%;
     flex-direction: column;
     gap: 10px;
     align-items: center;
-    padding: 60px 200px;
+    justify-content: center;
     box-shadow: 0rem 0.0rem 0.2rem rgba(224, 193, 246, 0.532);
+
+    @include mobile() {
+      background-color: transparent;
+      box-shadow: none;
+
+      p {
+        text-align: center;
+      }
+    }
+
 
     .logo {
       font-family: 'Qwigley', cursive;
@@ -115,6 +129,7 @@ p {
   color: #ffffff81;
   font-size: 15px;
   font-weight: bold;
+  margin-bottom: 0px;
 }
 
 .homeContainer {
@@ -183,8 +198,10 @@ p {
   .sideBar {
     flex: 1;
     background-color: #8942fc3a;
+    min-width: fit-content;
 
     .navBar {
+      overflow-y: hidden;
       display: flex;
       align-items: center;
       height: 50px;
@@ -240,12 +257,24 @@ p {
       border-radius: 10px;
       border: 1px solid rgb(206, 146, 238);
       overflow: hidden;
+      padding: 5px;
+      height: fit-content;
+      max-height: 35%;
+      overflow: scroll;
 
-      input {
-        padding: 8px 28px;
-        margin-bottom: 8px;
-        box-shadow: 0rem 0rem 0rem rgba(255, 255, 255, 0.654);
+      &::-webkit-scrollbar {
+        display: none;
       }
+
+      & {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
+
+    input {
+      padding: 8px 30px;
+      box-shadow: 0rem 0rem 0rem rgba(255, 255, 255, 0.654);
     }
 
     .users {
@@ -256,7 +285,6 @@ p {
       padding: 5px;
       color: white;
       font-weight: bold;
-
 
       &:hover {
         background-color: #5d33a2;
@@ -277,6 +305,28 @@ p {
     }
 
     .chats {
+      height: calc(100% - 190px);
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      & {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      @include mobile() {
+
+        height: calc(100%);
+      }
+
+      @include tab() {
+
+        height: calc(100% - 80px);
+      }
+
       .userInfo {
         p {
           font-size: 14px;
@@ -318,18 +368,35 @@ p {
       height: calc(100% - 170px);
       overflow: scroll;
 
+      @include mobile() {
+        height: calc(100% - 150px);
+
+      }
+
       .message {
         display: flex;
         gap: 20px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+
+        @include mobile() {
+          gap: 10px;
+          margin-bottom: 5px;
+        }
 
         .messageInfo {
           display: flex;
           flex-direction: column;
-          color: rgba(57, 22, 76, 0.452);
-          font-weight: 250;
-          font-size: 10px;
+          color: rgba(255, 255, 255, 0.598);
+          font-weight: 350;
+          font-size: 8px;
           align-items: center;
+          margin-bottom: 10px;
+
+          @include mobile() {
+            display: none;
+          }
+
+
 
           img {
             width: 40px;
@@ -350,16 +417,22 @@ p {
           p {
             color: white;
             background-color: #5e33a297;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: 0px 10px 10px 10px;
             max-width: max-content;
             font-weight: 500;
+
+            @include mobile() {
+              font-size: 10px;
+              padding: 8px 12px;
+            }
           }
 
           img {
             width: 50%;
             border-radius: 2px;
             object-fit: cover;
+
           }
         }
 
@@ -390,10 +463,18 @@ p {
       padding: 10px;
       gap: 10px;
 
+      @include mobile() {
+        height: 30px;
+      }
+
       input {
         width: 100%;
         outline: none;
         box-shadow: 0rem 0rem 0rem rgba(81, 50, 60, 0.654);
+
+        @include mobile() {
+          padding: 8px;
+        }
       }
 
       .send {
