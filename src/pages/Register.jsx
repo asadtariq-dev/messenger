@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AvatarLogo from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, storage } from "../firebase";
+import { auth, db, storage } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -36,15 +37,23 @@ const Register = () => {
           setError(error);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
             await updateProfile(res.user, {
-              name,
-              photoURL: downloadURL,
+              displayName: name,
+              photoURL: url,
             });
-            navigate("/login");
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName: name,
+              email,
+              photoURL: url,
+            });
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+            navigate("/");
           });
         }
       );
+
       setError("");
     } catch (error) {
       setError(error.message);
