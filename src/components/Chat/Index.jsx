@@ -5,20 +5,23 @@ import Input from "./Input";
 import { ChatContext } from "../../context/ChatContext";
 const Chat = () => {
   const { data } = useContext(ChatContext);
+
+  if (data.chatId === "null")
+    return (
+      <div
+        className="chat"
+        style={{ textAlign: "center", alignSelf: "center" }}
+      >
+        <p>Select a user to start chatting</p>
+      </div>
+    );
   return (
     <div className="chat" style={{ textAlign: "center" }}>
-      {!data.chatId ? (
-        <>
-          <p className="logo">Purple</p>
-          <p>Select a user to chat</p>
-        </>
-      ) : (
-        <>
-          <ChatHead />
-          <Messages />
-          <Input />
-        </>
-      )}
+      <>
+        <ChatHead />
+        <Messages />
+        <Input />
+      </>
     </div>
   );
 };
