@@ -23,7 +23,6 @@ const Input = () => {
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
-    console.log(data);
     if (image) {
       const storageRef = ref(storage, uuid());
       const uploadTask = uploadBytesResumable(storageRef, image);
@@ -85,16 +84,14 @@ const Input = () => {
         onKeyDown={handleKey}
       />
       <div className="send">
-        <img src={imgIcon} alt="" />
         <input
           type="file"
           style={{ display: "none" }}
           id="file"
           onChange={(event) => setImage(event.target.files[0])}
-          value={image}
         />
         <label htmlFor="file">
-          <img src={attachmentIcon} alt="" />
+          <img src={imgIcon} alt="" />
         </label>
         <button className="text" onClick={handleSend}>
           Send
