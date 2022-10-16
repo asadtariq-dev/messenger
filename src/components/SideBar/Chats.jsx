@@ -3,6 +3,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
+import Loader from "../Loader";
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
@@ -38,10 +39,22 @@ const Chats = () => {
               key={chat[0].date}
               onClick={() => handleSelect(chat[1].userInfo)}
             >
-              <img src={chat[1].userInfo.photoURL} alt="" />
+              {chat[1].userInfo?.photoURL ? (
+                <img src={chat[1].userInfo.photoURL} alt="" />
+              ) : (
+                <Loader shape="circle" />
+              )}
               <div className="userInfo">
-                <span className="name">{chat[1].userInfo.displayName}</span>
-                <p>{chat[1].lastMessage?.text}</p>
+                {chat[1].userInfo?.displayName ? (
+                  <span className="name">{chat[1].userInfo.displayName}</span>
+                ) : (
+                  <Loader shape="rect" />
+                )}
+                {chat[1].userInfo?.photoURL ? (
+                  <p>{chat[1].lastMessage?.text}</p>
+                ) : (
+                  <Loader shape="rect" />
+                )}
               </div>
             </div>
           );

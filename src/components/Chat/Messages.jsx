@@ -17,6 +17,14 @@ const Messages = () => {
       unsub();
     };
   }, [data.chatId]);
+
+  if (messages.length === 0) {
+    return (
+      <div className="messages">
+        <p>Say hi to {data.user.displayName}</p>
+      </div>
+    );
+  }
   return (
     <div className="messages">
       {messages.map((message) => {

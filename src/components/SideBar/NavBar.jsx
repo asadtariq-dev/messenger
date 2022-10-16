@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { auth } from "../../firebase";
 import moreIcon from "../../img/logout.png";
-import PlaceholderLoading from "react-placeholder-loading";
+import Loader from "../Loader";
 
 const NavBar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -14,17 +14,12 @@ const NavBar = () => {
           {currentUser.photoURL ? (
             <img src={currentUser.photoURL} alt="" />
           ) : (
-            <PlaceholderLoading
-              shape="circle"
-              width={30}
-              height={30}
-              colorEnd="rgba(255, 253, 253, 0.53)"
-            />
+            <Loader shape="circle" />
           )}
           {currentUser.displayName ? (
             <span className="name">{currentUser.displayName}</span>
           ) : (
-            <PlaceholderLoading shape="rect" width={100} height={10} />
+            <Loader shape="rect" />
           )}
         </div>
       </span>
