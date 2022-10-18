@@ -1,12 +1,18 @@
 import { signOut } from "firebase/auth";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
 import { auth } from "../../firebase";
 import moreIcon from "../../img/logout.png";
 import Loader from "../Loader";
 
 const NavBar = () => {
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
+  const handleSignOut = () => {
+    dispatch({ type: "NULL_USER", payload: { chatId: "null", user: {} } });
+    signOut(auth);
+  };
   return (
     <div className="navBar">
       <span>
@@ -33,7 +39,7 @@ const NavBar = () => {
           cursor: "pointer",
         }}
         alt=""
-        onClick={() => signOut(auth)}
+        onClick={() => handleSignOut()}
       />
     </div>
   );
