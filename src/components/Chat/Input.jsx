@@ -10,22 +10,29 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
 import { db, storage } from "../../firebase";
-import attachmentIcon from "../../img/attachment.png";
 import imgIcon from "../../img/img.png";
 import sendIcon from "../../img/send.png";
 import { v4 as uuid } from "uuid";
+import createChat from "../../utils/createChat";
 
 const Input = () => {
-  const [text, setText] = useState("");
-  const [image, setImage] = useState("");
+  var [text, setText] = useState("");
+  var [image, setImage] = useState("");
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
-    if (image) {
+    await createChat(data.user);
+    const tempText = text;
+    const tempImg = image;
+
+    setText("");
+    setImage("");
+
+    if (tempImg) {
       const storageRef = ref(storage, uuid());
-      const uploadTask = uploadBytesResumable(storageRef, image);
+      const uploadTask = uploadBytesResumable(storageRef, tempImg);
 
       uploadTask.on(
         (error) => {
@@ -36,7 +43,7 @@ const Input = () => {
             await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
                 id: uuid(),
-                text,
+                text: tempText,
                 senderId: currentUser.uid,
                 date: Timestamp.now(),
                 image: url,
@@ -49,27 +56,26 @@ const Input = () => {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
-          text,
+          text: tempText,
           senderId: currentUser.uid,
           date: Timestamp.now(),
         }),
       });
     }
-
     await updateDoc(doc(db, "userChats", currentUser.uid), {
       [data.chatId + ".lastMessage"]: {
-        text,
+        text: `${image !== "" ? "you sent an image" : tempText}`,
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
     await updateDoc(doc(db, "userChats", data.user.uid), {
       [data.chatId + ".lastMessage"]: {
-        text,
+        text: `${image !== "" ? "you recieved an image" : tempText}`,
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
     setText("");
-    setImage(null);
+    setImage("");
   };
   const handleKey = (e) => {
     e.code === "Enter" && handleSend();
@@ -93,7 +99,11 @@ const Input = () => {
         <label htmlFor="file">
           <img src={imgIcon} alt="" />
         </label>
-        <button className="text" onClick={handleSend}>
+        <button
+          className="text"
+          onClick={handleSend}
+          disabled={text === "" && image === ""}
+        >
           Send
         </button>
         <img className="icon" src={sendIcon} alt="" onClick={handleSend} />
