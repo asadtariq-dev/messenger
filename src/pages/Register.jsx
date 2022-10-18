@@ -21,40 +21,43 @@ const Register = () => {
 
   const onSubmit = async () => {
     try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      if (name && email && password && avatar) {
+        const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      const storageRef = ref(storage, name);
-      const uploadTask = uploadBytesResumable(storageRef, avatar);
+        const storageRef = ref(storage, name);
+        const uploadTask = uploadBytesResumable(storageRef, avatar);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress);
-        },
-        (error) => {
-          setError(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-            await updateProfile(res.user, {
-              displayName: name,
-              photoURL: url,
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(progress);
+          },
+          (error) => {
+            setError(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+              await updateProfile(res.user, {
+                displayName: name,
+                photoURL: url,
+              });
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName: name,
+                email,
+                photoURL: url,
+              });
+              await setDoc(doc(db, "userChats", res.user.uid), {});
+              navigate("/");
             });
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName: name,
-              email,
-              photoURL: url,
-            });
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-            navigate("/");
-          });
-        }
-      );
-
-      setError("");
+          }
+        );
+        setError("");
+      } else {
+        setError("Fields can't be blank");
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -81,9 +84,10 @@ const Register = () => {
       ) : (
         <div className="formWrapper">
           <p className="logo">Purple</p>
-          {error && <p>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <div>
             <input
+              required={true}
               type="text"
               placeholder="Name"
               onChange={(event) => {
@@ -91,6 +95,7 @@ const Register = () => {
               }}
             />
             <input
+              required={true}
               type="email"
               placeholder="Email"
               onChange={(event) => {
@@ -98,6 +103,7 @@ const Register = () => {
               }}
             />
             <input
+              required={true}
               type="password"
               placeholder="Password"
               onChange={(event) => {
@@ -105,12 +111,14 @@ const Register = () => {
               }}
             />
             <input
+              required={true}
               onChange={(event) => {
                 setAvatar(event.target.files[0]);
               }}
               style={{ display: "none" }}
               type="file"
               id="file"
+              accept="image/png, image/jpeg, image/webp, image/jpg"
             />
 
             <div

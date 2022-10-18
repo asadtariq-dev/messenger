@@ -94,6 +94,7 @@ const Input = () => {
           type="file"
           style={{ display: "none" }}
           id="file"
+          accept="image/png, image/jpeg, image/webp, image/jpg"
           onChange={(event) => setImage(event.target.files[0])}
         />
         <label htmlFor="file">
