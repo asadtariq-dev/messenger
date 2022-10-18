@@ -1,25 +1,14 @@
 import React, { useContext, useState } from "react";
-import searchIcon from "../../img/search.png";
-import {
-  collection,
-  setDoc,
-  getDocs,
-  doc,
-  getDoc,
-  query,
-  where,
-  updateDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
-import { AuthContext } from "./../../context/AuthContext";
+import searchIcon from "../../img/search.png";
+import { ChatContext } from "../../context/ChatContext";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(false);
 
-  const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
   const handleSearch = async (str) => {
     setSearchQuery(str);
@@ -30,43 +19,15 @@ const SearchBar = () => {
         setUser(doc.data());
       });
     } catch (error) {
-      setError(true);
+      console.log(error.message)
     }
   };
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
   };
 
-  const handleSelect = async () => {
-    const chatID =
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
-    try {
-      const res = await getDoc(doc(db, "chats", chatID));
-      if (!res.exists()) {
-        await setDoc(doc(db, "chats", chatID), { messages: [] });
-
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [chatID + ".userInfo"]: {
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-          },
-          [chatID + ".date"]: serverTimestamp(),
-        });
-        await updateDoc(doc(db, "userChats", user.uid), {
-          [chatID + ".userInfo"]: {
-            uid: currentUser.uid,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
-          },
-          [chatID + ".date"]: serverTimestamp(),
-        });
-      }
-    } catch (error) {
-      setError(true);
-    }
+  const handleSelect = () => {
+    dispatch({ type: "CHANGE_USER", payload: user });
     setUser("");
     setSearchQuery("");
   };
@@ -84,7 +45,7 @@ const SearchBar = () => {
       {/* {error && <p>User not found</p>} */}
       {user && (
         <div className="searchBar">
-          <div className="users" onClick={handleSelect}>
+          <div className="users" onClick={() => handleSelect()}>
             <img src={user.photoURL} alt="" />
             <div className="userInfo">
               <span>{user.displayName}</span>

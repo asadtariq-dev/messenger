@@ -59,6 +59,10 @@ button {
   &:focus {
     background-color: rgb(125, 109, 130);
   }
+
+  &:disabled {
+    background-color: rgb(157, 123, 188);
+  }
 }
 
 .logo {
@@ -77,6 +81,53 @@ button {
   padding: 5px 8px;
   font-size: 15px;
   font-weight: bold;
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 8px;
+    padding: 8px;
+    overflow: hidden;
+    word-break: break-all;
+    word-wrap: break-word;
+
+    @include mobile() {
+      padding: 6px;
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+  }
+
+  @include mobile() {
+    img {
+      width: 45px;
+      height: 45px;
+    }
+  }
 }
 
 .formContainer {
@@ -151,6 +202,19 @@ p {
     overflow: hidden;
     display: flex;
 
+
+    .user {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-items: center;
+      color: aliceblue;
+      gap: 10px;
+      font-weight: bold;
+      overflow: hidden;
+      word-break: break-all;
+    }
+
     @include tab() {
       width: 95%;
       height: 98vh;
@@ -211,13 +275,7 @@ p {
       padding: 10px;
       justify-content: space-between;
 
-      .user {
-        align-items: center;
-        color: aliceblue;
-        display: flex;
-        gap: 10px;
-        font-weight: bold;
-      }
+
 
       img {
         background-color: rgba(55, 34, 72, 0.366);
@@ -320,6 +378,8 @@ p {
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+
+
 
       @include mobile() {
 
