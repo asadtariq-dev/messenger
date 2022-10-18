@@ -33,10 +33,13 @@ const Chats = () => {
       {Object.entries(chats)
         ?.sort((a, b) => b[1].date - a[1].date)
         .map((chat) => {
+          if (!chat[1].lastMessage) {
+            return null;
+          }
           return (
             <div
               className="users"
-              key={chat[0].date}
+              key={chat[1].userInfo.uid}
               onClick={() => handleSelect(chat[1].userInfo)}
             >
               {chat[1].userInfo?.photoURL ? (
