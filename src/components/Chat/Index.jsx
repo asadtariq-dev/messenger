@@ -9,7 +9,7 @@ const Chat = () => {
 
   if (data?.chatId === "null") return <Suggestion />;
   return (
-    <div className="chat" style={{ textAlign: "center" }}>
+    <div className="chat">
       <>
         <ChatHead />
         <Messages />
