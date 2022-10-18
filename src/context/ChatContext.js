@@ -8,6 +8,7 @@ export const ChatContextProvider = ({ children }) => {
   const INITIAL_STATE = {
     chatId: "null",
     user: {},
+    status: {},
   };
 
   const chatReducer = (state, action) => {
@@ -19,6 +20,11 @@ export const ChatContextProvider = ({ children }) => {
             currentUser.uid > action.payload.uid
               ? currentUser.uid + action.payload.uid
               : action.payload.uid + currentUser.uid,
+        };
+
+      case "CHANGE_STATUS":
+        return {
+          userId: action.payload.uid,
         };
 
       default:
