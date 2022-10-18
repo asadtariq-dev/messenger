@@ -12,9 +12,13 @@ const Login = () => {
 
   const onSubmit = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setError("");
-      navigate("/");
+      if (email && password) {
+        await signInWithEmailAndPassword(auth, email, password);
+        setError("");
+        navigate("/");
+      } else {
+        setError("Email or password can't be blank");
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -23,9 +27,10 @@ const Login = () => {
     <div className="formContainer">
       <div className="formWrapper">
         <p className="logo">Purple</p>
-        {error && <p>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <div>
           <input
+            required={true}
             type="email"
             placeholder="Email"
             onChange={(event) => {
@@ -33,6 +38,7 @@ const Login = () => {
             }}
           />
           <input
+            required={true}
             type="password"
             placeholder="Password"
             onChange={(event) => {
