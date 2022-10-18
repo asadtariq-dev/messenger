@@ -1,12 +1,24 @@
 import { signOut } from "firebase/auth";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import moreIcon from "../../img/logout.png";
 import PlaceholderLoading from "react-placeholder-loading";
+import { doc, Timestamp, updateDoc } from "firebase/firestore";
 
 const NavBar = () => {
+  var isOfflineForDatabase = {
+    state: "offline",
+    last_changed: Timestamp.now().seconds,
+  };
   const { currentUser } = useContext(AuthContext);
+  const handleSignOut = async () => {
+    await updateDoc(doc(db, "/users/", currentUser.uid), {
+      status: isOfflineForDatabase,
+    });
+    signOut(auth);
+  };
+
   return (
     <div className="navBar">
       <span>
@@ -22,7 +34,9 @@ const NavBar = () => {
             />
           )}
           {currentUser.displayName ? (
-            <span className="name">{currentUser.displayName}</span>
+            <>
+              <span className="name">{currentUser.displayName}</span>
+            </>
           ) : (
             <PlaceholderLoading shape="rect" width={100} height={10} />
           )}
@@ -38,7 +52,7 @@ const NavBar = () => {
           cursor: "pointer",
         }}
         alt=""
-        onClick={() => signOut(auth)}
+        onClick={handleSignOut}
       />
     </div>
   );
