@@ -10,7 +10,7 @@ const Messages = () => {
 
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
-      doc.exists() && setMessages(doc.data().messages);
+      doc.exists() ? setMessages(doc.data().messages) : setMessages([]);
     });
 
     return () => {
@@ -18,7 +18,7 @@ const Messages = () => {
     };
   }, [data.chatId]);
 
-  if (messages.length === 0) {
+  if (messages?.length === 0) {
     return (
       <div className="messages">
         <p>Say hi to {data.user.displayName}</p>
