@@ -1,18 +1,24 @@
 import { signOut } from "firebase/auth";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { ChatContext } from "../../context/ChatContext";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import moreIcon from "../../img/logout.png";
-import Loader from "../Loader";
+import PlaceholderLoading from "react-placeholder-loading";
+import { doc, Timestamp, updateDoc } from "firebase/firestore";
 
 const NavBar = () => {
+  var isOfflineForDatabase = {
+    state: "offline",
+    last_changed: Timestamp.now().seconds,
+  };
   const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(ChatContext);
-  const handleSignOut = () => {
-    dispatch({ type: "NULL_USER", payload: { chatId: "null", user: {} } });
+  const handleSignOut = async () => {
+    await updateDoc(doc(db, "/users/", currentUser.uid), {
+      status: isOfflineForDatabase
+    });
     signOut(auth);
   };
+
   return (
     <div className="navBar">
       <span>
@@ -20,12 +26,19 @@ const NavBar = () => {
           {currentUser.photoURL ? (
             <img src={currentUser.photoURL} alt="" />
           ) : (
-            <Loader shape="circle" />
+            <PlaceholderLoading
+              shape="circle"
+              width={30}
+              height={30}
+              colorEnd="rgba(255, 253, 253, 0.53)"
+            />
           )}
           {currentUser.displayName ? (
-            <span className="name">{currentUser.displayName}</span>
+            <>
+              <span className="name">{currentUser.displayName}</span>
+            </>
           ) : (
-            <Loader shape="rect" />
+            <PlaceholderLoading shape="rect" width={100} height={10} />
           )}
         </div>
       </span>
@@ -39,7 +52,7 @@ const NavBar = () => {
           cursor: "pointer",
         }}
         alt=""
-        onClick={() => handleSignOut()}
+        onClick={handleSignOut}
       />
     </div>
   );
