@@ -28,7 +28,7 @@ const Suggestion = () => {
     return () => {
       unsub();
     };
-  });
+  }, []);
   return (
     <div
       className="chat"
