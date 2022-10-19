@@ -21,7 +21,7 @@ const Messages = () => {
   if (messages?.length === 0) {
     return (
       <div className="messages">
-        <p>Say hi to {data.user.displayName}</p>
+        <p style={{ textAlign: "center" }}>Say hi to {data.user.displayName}</p>
       </div>
     );
   }
