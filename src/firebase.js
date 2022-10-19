@@ -1,16 +1,16 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAlFeo06tKW9ss0fK_wBft0wOOq9Tact7U",
-  authDomain: "purple-52d0c.firebaseapp.com",
-  projectId: "purple-52d0c",
-  storageBucket: "purple-52d0c.appspot.com",
-  messagingSenderId: "434860994583",
-  appId: "1:434860994583:web:20a67817e72d4a829f6c52",
+  apiKey: "AIzaSyChMl5_8awPbKVb5Rh_KlYn6we2t9we5D0",
+  authDomain: "purple-2-f2597.firebaseapp.com",
+  projectId: "purple-2-f2597",
+  storageBucket: "purple-2-f2597.appspot.com",
+  messagingSenderId: "433287893540",
+  appId: "1:433287893540:web:9c3bb71925bc6844a03eb1",
+  measurementId: "G-EL9PYE93FX",
 };
 
 export const app = initializeApp(firebaseConfig);
