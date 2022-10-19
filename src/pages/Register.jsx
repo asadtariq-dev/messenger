@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AvatarLogo from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -18,6 +18,11 @@ const Register = () => {
   const [avatar, setAvatar] = useState("");
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
+
+  var status = {
+    state: "online",
+    last_changed: Timestamp.now().seconds,
+  };
 
   const onSubmit = async () => {
     try {
@@ -48,6 +53,7 @@ const Register = () => {
                 displayName: name,
                 email,
                 photoURL: url,
+                status,
               });
               await setDoc(doc(db, "userChats", res.user.uid), {});
               navigate("/");
