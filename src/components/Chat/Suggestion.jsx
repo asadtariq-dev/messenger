@@ -28,9 +28,12 @@ const Suggestion = () => {
     return () => {
       unsub();
     };
-  }, []);
+  });
   return (
-    <div className="chat" style={{ textAlign: "center", alignSelf: "center" }}>
+    <div
+      className="chat"
+      style={{ textAlign: "center", alignSelf: "center", padding: "10px" }}
+    >
       <p>People you may know</p>
       <div className="suggestions">
         {users?.map((user) => {
