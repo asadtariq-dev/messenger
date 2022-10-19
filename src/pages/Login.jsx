@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { ChatContext } from "../context/ChatContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,9 +11,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const { dispatch } = useContext(ChatContext);
+
+  const setDefault = () => {
+    dispatch({ type: "NULL_USER", payload: { chatId: "null", user: {} } });
+  };
+
   const onSubmit = async () => {
     try {
       if (email && password) {
+        setDefault();
         await signInWithEmailAndPassword(auth, email, password);
         setError("");
         navigate("/");
