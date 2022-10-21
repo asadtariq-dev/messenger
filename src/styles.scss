@@ -267,6 +267,37 @@ p {
     background-color: #8942fc3a;
     min-width: fit-content;
 
+    .logoutBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      button {
+        margin-top: 20px;
+
+        @include tab() {
+          display: none;
+        }
+
+        @include mobile() {
+          display: none;
+        }
+      }
+
+      img {
+        display: none;
+
+        @include tab () {
+          display: inline;
+        }
+
+        @include mobile() {
+          display: inline;
+        }
+      }
+
+    }
+
     .navBar {
       overflow-y: hidden;
       display: flex;
@@ -296,18 +327,6 @@ p {
         color: rgba(246, 237, 255, 0.624);
         font-weight: bold;
         font-size: 35px;
-      }
-
-      .logoutBtn {
-        background-color: #4c0795c3;
-        border-radius: 10px;
-        color: rgba(255, 255, 255, 0.781);
-        border: none;
-        font-size: small;
-        font-weight: bold;
-        padding: 2px 8px;
-        cursor: pointer;
-        box-shadow: 0rem 0.1rem 0.1rem rgba(232, 201, 255, 0.65);
       }
     }
 
@@ -367,7 +386,7 @@ p {
     }
 
     .chats {
-      height: calc(100% - 190px);
+      height: calc(100% - 185px);
       overflow: scroll;
 
       &::-webkit-scrollbar {
@@ -382,13 +401,11 @@ p {
 
 
       @include mobile() {
-
-        height: calc(100%);
+        height: calc(100% - 125px);
       }
 
       @include tab() {
-
-        height: calc(100% - 80px);
+        height: calc(100% - 125px);
       }
 
       .userInfo {
